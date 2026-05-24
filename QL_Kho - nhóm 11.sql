@@ -465,6 +465,37 @@ BEGIN
     PRINT N'Thêm chi tiết phiếu xuất thành công!';
 END
 GO
+
+GO
+CREATE PROCEDURE sp_UpdateNhaCungCap
+    @MaNCC   CHAR(10),
+    @TenNCC  NVARCHAR(100) = NULL,
+    @SDT     VARCHAR(15)   = NULL,
+    @DiaChi  NVARCHAR(100) = NULL,
+    @Email   NVARCHAR(100) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+
+    IF NOT EXISTS (SELECT 1 FROM NhaCungCap WHERE MaNCC = @MaNCC)
+    BEGIN
+        RAISERROR(N'Loi: Ma nha cung cap %s khong ton tai.', 16, 1, @MaNCC);
+        RETURN;
+    END
+
+
+    UPDATE NhaCungCap
+    SET
+        TenNCC = ISNULL(@TenNCC, TenNCC),
+        SDT    = ISNULL(@SDT,    SDT),
+        DiaChi = ISNULL(@DiaChi, DiaChi),
+        Email  = ISNULL(@Email,  Email)
+    WHERE MaNCC = @MaNCC;
+
+    PRINT N'Cap nhat nha cung cap ' + @MaNCC + N' thanh cong.';
+END
+GO
 ----------------------------FUNCTION----------------------------------
 CREATE FUNCTION fn_PhieuNhapTheoKhoangThoiGian (@NgayBatDau DATETIME, @NgayKetThuc DATETIME)
 RETURNS TABLE AS RETURN
@@ -500,6 +531,7 @@ AS BEGIN
     RETURN;
 END;
 GO
+
 
 ----------------------------CURSOR----------------------------------
 CREATE PROCEDURE sp_BaoCaoGiaTriTonKhoTheoLoai_Cursor
@@ -629,8 +661,28 @@ GO
 
 
 
-
 GO
 DELETE FROM ChiTietPX WHERE MaPX = 'PX09' AND MaSP = 'SP03';
 EXEC sp_InsertChiTietPX @MaPX = 'PX09', @MaSP = 'SP03', @SoLuong = 5, @DonGiaXuat = 16000;
+GO
+
+
+-- Cap nhat toan bo thong tin
+EXEC sp_UpdateNhaCungCap
+    @MaNCC  = 'NCC01',
+    @TenNCC = N'Công ty An Phát Mới',
+    @SDT    = '0912999111',
+    @DiaChi = N'Hà Nội - Quận Cầu Giấy',
+    @Email  = 'anphatmoi@gmail.com';
+GO
+
+-- Chi cap nhat SDT va Email, giu nguyen phan con lai
+EXEC sp_UpdateNhaCungCap
+    @MaNCC = 'NCC02',
+    @SDT   = '0999888777',
+    @Email = 'minhlong_new@gmail.com';
+GO
+
+-- Kiem tra ket qua
+SELECT * FROM NhaCungCap WHERE MaNCC IN ('NCC01', 'NCC02');
 GO
