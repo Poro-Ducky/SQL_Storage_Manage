@@ -3,7 +3,7 @@
 ---Nguyễn Hoàng Hiển Long
 ---Nguyễn Hữu Nhật
 ---Võ Thành Long
----Đặng Thành Hứa
+
 
 CREATE DATABASE QL_KHO
 GO
