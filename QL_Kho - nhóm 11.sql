@@ -580,3 +580,9 @@ GO
 
 EXEC sp_XetThuongNhanVienXuatKho_Cursor;
 GO
+
+-- Gọi thử với mã không tồn tại → trả về bảng rỗng
+SELECT *
+FROM fn_LichSuGiaoDichNhanVien('NV99');
+GO
+
