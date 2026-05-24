@@ -438,6 +438,33 @@ AS BEGIN
     IF @TongSoLuong IS NULL SET @TongSoLuong = 0;
 END
 GO
+
+GO
+CREATE PROCEDURE sp_InsertChiTietPX
+    @MaPX char(10),
+    @MaSP char(10),
+    @SoLuong int,
+    @DonGiaXuat money
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    DECLARE @SLTonHienTai INT;
+    SELECT @SLTonHienTai = SLTon FROM SanPham WHERE MaSP = @MaSP;
+
+    IF @SLTonHienTai < @SoLuong
+    BEGIN
+        RAISERROR(N'Lỗi: Kho không đủ hàng! Hiện chỉ còn %d sản phẩm.', 16, 1, @SLTonHienTai);
+        RETURN;
+    END
+
+    DECLARE @ThanhTien money = @SoLuong * @DonGiaXuat;
+    INSERT INTO ChiTietPX (MaPX, MaSP, SoLuong, DonGiaXuat, ThanhTien)
+    VALUES (@MaPX, @MaSP, @SoLuong, @DonGiaXuat, @ThanhTien);
+
+    PRINT N'Thêm chi tiết phiếu xuất thành công!';
+END
+GO
 ----------------------------FUNCTION----------------------------------
 CREATE FUNCTION fn_PhieuNhapTheoKhoangThoiGian (@NgayBatDau DATETIME, @NgayKetThuc DATETIME)
 RETURNS TABLE AS RETURN
@@ -603,3 +630,7 @@ GO
 
 
 
+GO
+DELETE FROM ChiTietPX WHERE MaPX = 'PX09' AND MaSP = 'SP03';
+EXEC sp_InsertChiTietPX @MaPX = 'PX09', @MaSP = 'SP03', @SoLuong = 5, @DonGiaXuat = 16000;
+GO
