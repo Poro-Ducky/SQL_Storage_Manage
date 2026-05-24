@@ -613,3 +613,7 @@ SELECT *
 FROM fn_LichSuGiaoDichNhanVien('NV99');
 GO
 
+GO
+DELETE FROM ChiTietPX WHERE MaPX = 'PX09' AND MaSP = 'SP03';
+EXEC sp_InsertChiTietPX @MaPX = 'PX09', @MaSP = 'SP03', @SoLuong = 5, @DonGiaXuat = 16000;
+GO
