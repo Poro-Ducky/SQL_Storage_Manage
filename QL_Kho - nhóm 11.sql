@@ -5,7 +5,14 @@
 ---Võ Thành Long
 ---Đặng Thành Hứa
 
-create database QL_KHO
+CREATE DATABASE QL_KHO
+GO
+USE QL_KHO
+GO
+
+-- =========================================================
+-- PHẦN 1: TẠO BẢNG
+-- =========================================================
 
 ---Bảng loại sản phẩm
 create table LoaiSanPham
@@ -23,8 +30,7 @@ create table SanPham
 	SLTon int,
 	MaLoai char (10),
 	DonGia int,
-	constraint PK_SanPham primary key (MaSP),
-	constraint FK_LoaiSanPham foreign key (MaLoai) references LoaiSanPham(MaLoai)
+	constraint PK_SanPham primary key (MaSP)
 );
 
 ---Bảng nhân viên
@@ -33,8 +39,8 @@ create table NhanVien
 	MaNV char (10) primary key not null,
 	HoTen nvarchar (100),
 	NgaySinh datetime,
-	SDT int,
-	ChucVu nvarchar (20),
+	SDT varchar(15),
+	ChucVu nvarchar(20)
 );
 
 ---Bảng nhà cung cấp
@@ -42,7 +48,7 @@ create table NhaCungCap
 (
 	MaNCC char (10) primary key not null,
 	TenNCC nvarchar (100),
-	SDT int,
+	SDT varchar(15),
 	DiaChi nvarchar (100),
 	Email nvarchar (100)
 );
@@ -53,7 +59,7 @@ create table DaiLy
 	MaDL char (10) primary key not null,
 	TenDL nvarchar (100),
 	DiaChi nvarchar (100),
-	SDT int
+	SDT varchar(15)
 );
 
 ---Bảng phiếu nhập
@@ -61,11 +67,9 @@ create table PhieuNhap
 (
 	MaPN char (10) primary key not null,
 	NgayNhap datetime,
-	TongTien money,
+	TongTien money default 0,
 	MaNCC char (10),
-	MaNV char (10),
-	constraint FK_NhaCungCap foreign key (MaNCC) references NhaCungCap(MaNCC),
-	constraint FK_NhanVien_PN foreign key (MaNV) references NhanVien(MaNV)
+	MaNV char (10)
 );
 
 ---Bảng phiếu xuất
@@ -73,24 +77,20 @@ create table PhieuXuat
 (
 	MaPX char (10) primary key not null,
 	NgayXuat datetime,
-	TongTien money,
+	TongTien money default 0,
 	MaDL char (10),
-	MaNV char (10),
-	constraint FK_DaiLy foreign key (MaDL) references DaiLy(MaDL),
-	constraint FK_NhanVien_PX foreign key (MaNV) references NhanVien(MaNV)
+	MaNV char (10)
 );
 
 ---Bảng chi tiết phiếu nhập
 create table ChiTietPN
 (
-	MaPN char (10) not null ,
+	MaPN char (10) not null,
 	MaSP char (10) not null,
 	SoLuong int,
 	DonGiaNhap money,
 	ThanhTien money,
-	constraint PK_CTPN primary key (MaPN, MaSP),
-	constraint FK_PhieuNhap foreign key (MaPN) references PhieuNhap(MaPN),
-	constraint FK_SanPham_CTPN foreign key (MaSP) references SanPham(MaSP)
+	constraint PK_CTPN primary key (MaPN, MaSP)
 );
 
 ---Bảng chi tiết phiếu xuất
@@ -99,115 +99,165 @@ create table ChiTietPX
 	MaPX char (10) not null,
 	MaSP char (10) not null,
 	SoLuong int,
-	DonGiaNhap money,
+	DonGiaXuat money,
 	ThanhTien money,
-	constraint PK_CTPX primary key (MaPX, MaSP),
-	constraint FK_PhieuXuat foreign key (MaPX) references PhieuXuat(MaPX),
-	constraint FK_SanPham_CTPX foreign key (MaSP) references SanPham(MaSP)
+	constraint PK_CTPX primary key (MaPX, MaSP)
 );
 
---- Bảng LoaiSanPham
---- Ràng buộc UNIQUE: Mã loại sản phẩm là duy nhất
-alter table LoaiSanPham
-add constraint UQ_LoaiSanPham_MaLoai unique (MaLoai);
+---Bảng Kho Hàng 
+create table KhoHang
+(
+	MaKho char(10) primary key not null,
+	TenKho nvarchar(100),
+	DiaChi nvarchar(200)
+);
 
---- Bảng SanPham
---- Ràng buộc UNIQUE: Mã sản phẩm là duy nhất
-alter table SanPham
-add constraint UQ_SanPham_MaSP unique (MaSP);
+---Bảng Tài Khoản 
+create table TaiKhoan
+(
+	TenDangNhap varchar(50) primary key not null,
+	MatKhau varchar(255) not null,
+	MaNV char(10) not null,
+	QuyenTruyCap nvarchar(50),
+	TrangThai bit
+);
 
---- Ràng buộc DEFAULT: Số lượng tồn mặc định = 0
-alter table SanPham
-add constraint DF_SanPham_SLTon default 0 for SLTon;
+---Bảng Phiếu Kiểm Kê 
+create table PhieuKiemKe
+(
+	MaPKK char(10) primary key not null,
+	NgayKiemKe datetime,
+	MaNV char(10) not null,
+	GhiChu nvarchar(255)
+);
 
---- Ràng buộc CHECK: Số lượng tồn không âm
-alter table SanPham
-add constraint CK_SanPham_SLTon check (SLTon >= 0);
+---Bảng Chi Tiết Kiểm Kê
+create table ChiTietKiemKe
+(
+	MaPKK char(10) not null,
+	MaSP char(10) not null,
+	SLHeThong int,
+	SLThucTe int,
+	SLLech int, 
+	LyDo nvarchar(255),
+	constraint PK_CTKK primary key (MaPKK, MaSP)
+);
 
---- Đơn giá phải lớn hơn 0
-alter table SanPham
-add constraint CK_SanPham_DonGia check (DonGia > 0);
+-- =========================================================
+-- PHẦN 2: THÊM CÁC RÀNG BUỘC (CONSTRAINTS & FOREIGN KEYS)
+-- =========================================================
 
---- Bảng NhanVien
---- Ràng buộc UNIQUE: Mã nhân viên là duy nhất
-alter table NhanVien
-add constraint UQ_NhanVien_MaNV unique (MaNV)
+--- Ràng buộc UNIQUE
+alter table LoaiSanPham add constraint UQ_LoaiSanPham_MaLoai unique (MaLoai);
+alter table SanPham add constraint UQ_SanPham_MaSP unique (MaSP);
+alter table NhanVien add constraint UQ_NhanVien_MaNV unique (MaNV);
+alter table NhaCungCap add constraint UQ_NhaCungCap_MaNCC unique (MaNCC);
+alter table DaiLy add constraint UQ_DaiLy_MaDL unique (MaDL);
+alter table PhieuNhap add constraint UQ_PhieuNhap_MaPN unique (MaPN);
+alter table PhieuXuat add constraint UQ_PhieuXuat_MaPX unique (MaPX);
+alter table KhoHang add constraint UQ_KhoHang_MaKho unique (MaKho);
+alter table TaiKhoan add constraint UQ_TaiKhoan_TenDangNhap unique (TenDangNhap);
+alter table PhieuKiemKe add constraint UQ_PhieuKiemKe_MaPKK unique (MaPKK);
 
---- Ràng buộc DEFAULT: Chức vụ mặc định = Nhân viên
-alter table NhanVien
-add constraint DF_NhanVien_ChucVu default N'Nhân Viên' for ChucVu
+--- Ràng buộc DEFAULT
+alter table SanPham add constraint DF_SanPham_SLTon default 0 for SLTon;
+alter table NhanVien add constraint DF_NhanVien_ChucVu default N'Nhân Viên' for ChucVu;
+alter table PhieuNhap add constraint DF_PhieuNhap_NgayNhap default getdate() for NgayNhap;
+alter table PhieuXuat add constraint DF_PhieuXuat_NgayXuat default getdate() for NgayXuat;
+alter table TaiKhoan add constraint DF_TaiKhoan_QuyenTruyCap default N'Nhân Viên' for QuyenTruyCap;
+alter table TaiKhoan add constraint DF_TaiKhoan_TrangThai default 1 for TrangThai;
+alter table PhieuKiemKe add constraint DF_PhieuKiemKe_NgayKiemKe default getdate() for NgayKiemKe;
 
---- Bảng NhaCungCap
---- Ràng buộc UNIQUE: Mã nhà cung cấp là duy nhất
-alter table NhaCungCap
-add constraint UQ_NhaCungCap_MaNCC unique (MaNCC);
+--- Ràng buộc CHECK
+alter table SanPham add constraint CK_SanPham_SLTon check (SLTon >= 0);
+alter table SanPham add constraint CK_SanPham_DonGia check (DonGia > 0);
+alter table PhieuNhap add constraint CK_PhieuNhap_TongTien check (TongTien >= 0);
+alter table PhieuXuat add constraint CK_PhieuXuat_TongTien check (TongTien >= 0);
+alter table ChiTietPN add constraint CK_CTPN_SoLuong check (SoLuong > 0);
+alter table ChiTietPN add constraint CK_CTPN_DonGiaNhap check (DonGiaNhap > 0);
+alter table ChiTietPN add constraint CK_CTPN_ThanhTien check (ThanhTien >= 0);
+alter table ChiTietPX add constraint CK_CTPX_SoLuong check (SoLuong > 0);
+alter table ChiTietPX add constraint CK_CTPX_DonGiaXuat check (DonGiaXuat > 0); 
+alter table ChiTietPX add constraint CK_CTPX_ThanhTien check (ThanhTien >= 0);
 
---- Bảng DaiLy
---- Ràng buộc UNIQUE: Mã đại lý là duy nhất
-alter table DaiLy
-add constraint UQ_DaiLy_MaDL unique (MaDL);
+--- Ràng buộc KHÓA NGOẠI (FOREIGN KEY)
+alter table SanPham add constraint FK_LoaiSanPham foreign key (MaLoai) references LoaiSanPham(MaLoai);
 
---- Bảng PhieuNhap
---- Ràng buộc UNIQUE: Mã phiếu nhập là duy nhất
-alter table PhieuNhap
-add constraint UQ_PhieuNhap_MaPN unique (MaPN);
+alter table PhieuNhap add constraint FK_NhaCungCap foreign key (MaNCC) references NhaCungCap(MaNCC);
+alter table PhieuNhap add constraint FK_NhanVien_PN foreign key (MaNV) references NhanVien(MaNV);
 
---- Ràng buộc DEFAULT: Ngày nhập mặc định là ngày hiện tại
-alter table PhieuNhap
-add constraint DF_PhieuNhap_NgayNhap default getdate() for NgayNhap;
+alter table PhieuXuat add constraint FK_DaiLy foreign key (MaDL) references DaiLy(MaDL);
+alter table PhieuXuat add constraint FK_NhanVien_PX foreign key (MaNV) references NhanVien(MaNV);
 
---- Ràng buộc CHECK: Tổng tiền >= 0
-alter table PhieuNhap
-add constraint CK_PhieuNhap_TongTien check (TongTien >= 0);
+alter table ChiTietPN add constraint FK_PhieuNhap foreign key (MaPN) references PhieuNhap(MaPN);
+alter table ChiTietPN add constraint FK_SanPham_CTPN foreign key (MaSP) references SanPham(MaSP);
 
---- Bảng PhieuXuat
---- Ràng buộc UNIQUE: Mã phiếu xuất là duy nhất
-alter table PhieuXuat
-add constraint UQ_PhieuXuat_MaPX unique (MaPX);
+alter table ChiTietPX add constraint FK_PhieuXuat foreign key (MaPX) references PhieuXuat(MaPX);
+alter table ChiTietPX add constraint FK_SanPham_CTPX foreign key (MaSP) references SanPham(MaSP);
 
---- Ràng buộc DEFAULT: Ngày xuất mặc định là ngày hiện tại
-alter table PhieuXuat
-add constraint DF_PhieuXuat_NgayXuat default getdate() for NgayXuat;
+alter table TaiKhoan add constraint FK_TaiKhoan_NhanVien foreign key (MaNV) references NhanVien(MaNV);
 
---- Ràng buộc CHECK: Tổng tiền >= 0
-alter table PhieuXuat
-add constraint CK_PhieuXuat_TongTien check (TongTien >= 0);
+alter table PhieuKiemKe add constraint FK_KiemKe_NhanVien foreign key (MaNV) references NhanVien(MaNV);
 
---- Bảng ChiTietPN
---- Ràng buộc CHECK: Số lượng nhập > 0
-alter table ChiTietPN
-add constraint CK_CTPN_SoLuong check (SoLuong > 0);
+alter table ChiTietKiemKe add constraint FK_CTKK_PhieuKiemKe foreign key (MaPKK) references PhieuKiemKe(MaPKK);
+alter table ChiTietKiemKe add constraint FK_CTKK_SanPham foreign key (MaSP) references SanPham(MaSP);
 
---- Ràng buộc CHECK: Đơn giá nhập > 0
-alter table ChiTietPN
-add constraint CK_CTPN_DonGiaNhap check (DonGiaNhap > 0);
+-- =========================================================
+-- PHẦN 3: TRIGGER THỰC THI NGHIỆP VỤ LOGIC
+-- =========================================================
 
---- Ràng buộc CHECK: Thành tiền >= 0
-alter table ChiTietPN
-add constraint CK_CTPN_ThanhTien check (ThanhTien >= 0);
+GO
+--- Trigger tự động cộng Tồn Kho và tính Tổng Tiền khi NHẬP HÀNG
+CREATE TRIGGER trg_CapNhatPhieuNhap
+ON ChiTietPN
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    UPDATE sp
+    SET sp.SLTon = sp.SLTon - ISNULL(d.SoLuong, 0) + ISNULL(i.SoLuong, 0)
+    FROM SanPham sp
+    LEFT JOIN deleted d ON sp.MaSP = d.MaSP
+    LEFT JOIN inserted i ON sp.MaSP = i.MaSP;
 
---- Bảng ChiTietPX
---- Ràng buộc CHECK: Số lượng xuất > 0
-alter table ChiTietPX
-add constraint CK_CTPX_SoLuong check (SoLuong > 0);
+    DECLARE @DanhSachMaPN TABLE (MaPN CHAR(10));
+    INSERT INTO @DanhSachMaPN SELECT MaPN FROM inserted UNION SELECT MaPN FROM deleted;
 
---- Ràng buộc CHECK: Đơn giá xuất > 0
-alter table ChiTietPX
-add constraint CK_CTPX_DonGiaNhap check (DonGiaNhap > 0);
+    UPDATE pn
+    SET pn.TongTien = (SELECT ISNULL(SUM(ThanhTien), 0) FROM ChiTietPN WHERE MaPN = pn.MaPN)
+    FROM PhieuNhap pn
+    WHERE pn.MaPN IN (SELECT MaPN FROM @DanhSachMaPN);
+END
+GO
 
---- Ràng buộc CHECK: Thành tiền >= 0
-alter table ChiTietPX
-add constraint CK_CTPX_ThanhTien check (ThanhTien >= 0);
+--- Trigger tự động trừ Tồn Kho và tính Tổng Tiền khi XUẤT HÀNG
+CREATE TRIGGER trg_CapNhatPhieuXuat
+ON ChiTietPX
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    UPDATE sp
+    SET sp.SLTon = sp.SLTon + ISNULL(d.SoLuong, 0) - ISNULL(i.SoLuong, 0)
+    FROM SanPham sp
+    LEFT JOIN deleted d ON sp.MaSP = d.MaSP
+    LEFT JOIN inserted i ON sp.MaSP = i.MaSP;
+
+    DECLARE @DanhSachMaPX TABLE (MaPX CHAR(10));
+    INSERT INTO @DanhSachMaPX SELECT MaPX FROM inserted UNION SELECT MaPX FROM deleted;
+
+    UPDATE px
+    SET px.TongTien = (SELECT ISNULL(SUM(ThanhTien), 0) FROM ChiTietPX WHERE MaPX = px.MaPX)
+    FROM PhieuXuat px
+    WHERE px.MaPX IN (SELECT MaPX FROM @DanhSachMaPX);
+END
+GO
+
+-- =========================================================
+-- PHẦN 4: THÊM DỮ LIỆU MẪU
+-- =========================================================
 
 insert into LoaiSanPham values
-('L01', N'Đồ uống'),
-('L02', N'Bánh kẹo'),
-('L03', N'Gia vị'),
-('L04', N'Đồ hộp'),
-('L05', N'Sữa'),
-('L06', N'Mỹ phẩm'),
-('L07', N'Văn phòng phẩm'),
-('L08', N'Đồ gia dụng');
+('L01', N'Đồ uống'), ('L02', N'Bánh kẹo'), ('L03', N'Gia vị'), ('L04', N'Đồ hộp'),
+('L05', N'Sữa'), ('L06', N'Mỹ phẩm'), ('L07', N'Văn phòng phẩm'), ('L08', N'Đồ gia dụng');
 
 insert into SanPham values
 ('SP01', N'Nước suối Lavie', N'Chai', 100, 'L01', 5000),
@@ -220,58 +270,57 @@ insert into SanPham values
 ('SP08', N'Nước rửa chén', N'Chai', 50, 'L08', 30000);
 
 insert into NhanVien values
-('NV01', N'Nguyễn Văn A', '1999-05-10', 912345678, N'Quản Lý'),
-('NV02', N'Trần Thị B', '2000-08-15', 934567890, N'Nhân Viên'),
-('NV03', N'Lê Văn C', '1998-02-20', 965432187, N'Nhân Viên'),
-('NV04', N'Phạm Thị D', '2001-11-30', 978654321, N'Nhân Viên'),
-('NV05', N'Hoàng Văn E', '1997-06-25', 987654321, N'Nhân Viên'),
-('NV06', N'Đặng Thị F', '1999-09-18', 901234567, N'Nhân Viên'),
-('NV07', N'Bùi Văn G', '2000-01-05', 923456789, N'Nhân Viên'),
-('NV08', N'Võ Thị H', '2002-04-12', 956789012, N'Nhân Viên');
+('NV01', N'Nguyễn Văn A', '1999-05-10', '0912345678', N'Quản Lý'),
+('NV02', N'Trần Thị B', '2000-08-15', '0934567890', N'Nhân Viên'),
+('NV03', N'Lê Văn C', '1998-02-20', '0965432187', N'Nhân Viên'),
+('NV04', N'Phạm Thị D', '2001-11-30', '0978654321', N'Nhân Viên'),
+('NV05', N'Hoàng Văn E', '1997-06-25', '0987654321', N'Nhân Viên'),
+('NV06', N'Đặng Thị F', '1999-09-18', '0901234567', N'Nhân Viên'),
+('NV07', N'Bùi Văn G', '2000-01-05', '0923456789', N'Nhân Viên'),
+('NV08', N'Võ Thị H', '2002-04-12', '0956789012', N'Nhân Viên');
 
 insert into NhaCungCap values
-('NCC01', N'Công ty An Phát', 912345111, N'Hà Nội', 'anphat@gmail.com'),
-('NCC02', N'Công ty Minh Long', 912345222, N'TP.HCM', 'minhlong@gmail.com'),
-('NCC03', N'Công ty Hòa Bình', 912345333, N'Đà Nẵng', 'hoabinh@gmail.com'),
-('NCC04', N'Công ty Thành Công', 912345444, N'Hải Phòng', 'thanhcong@gmail.com'),
-('NCC05', N'Công ty Việt Nhật', 912345555, N'Cần Thơ', 'vietnhat@gmail.com'),
-('NCC06', N'Công ty Đại Phát', 912345666, N'Bình Dương', 'daiphat@gmail.com'),
-('NCC07', N'Công ty Tân Tiến', 912345777, N'Đồng Nai', 'tantien@gmail.com'),
-('NCC08', N'Công ty Phú Quý', 912345888, N'Long An', 'phuquy@gmail.com');
+('NCC01', N'Công ty An Phát', '0912345111', N'Hà Nội', 'anphat@gmail.com'),
+('NCC02', N'Công ty Minh Long', '0912345222', N'TP.HCM', 'minhlong@gmail.com'),
+('NCC03', N'Công ty Hòa Bình', '0912345333', N'Đà Nẵng', 'hoabinh@gmail.com'),
+('NCC04', N'Công ty Thành Công', '0912345444', N'Hải Phòng', 'thanhcong@gmail.com'),
+('NCC05', N'Công ty Việt Nhật', '0912345555', N'Cần Thơ', 'vietnhat@gmail.com'),
+('NCC06', N'Công ty Đại Phát', '0912345666', N'Bình Dương', 'daiphat@gmail.com'),
+('NCC07', N'Công ty Tân Tiến', '0912345777', N'Đồng Nai', 'tantien@gmail.com'),
+('NCC08', N'Công ty Phú Quý', '0912345888', N'Long An', 'phuquy@gmail.com');
 
 insert into DaiLy values
-('DL01', N'Đại lý Minh Châu', N'Quận 1', 934111111),
-('DL02', N'Đại lý Hồng Phát', N'Quận 3', 934222222),
-('DL03', N'Đại lý Tân Lợi', N'Quận 5', 934333333),
-('DL04', N'Đại lý Gia Bảo', N'Quận 7', 934444444),
-('DL05', N'Đại lý Hoàng Long', N'Tân Bình', 934555555),
-('DL06', N'Đại lý Phúc An', N'Gò Vấp', 934666666),
-('DL07', N'Đại lý Thịnh Phát', N'Bình Thạnh', 934777777),
-('DL08', N'Đại lý Đại Phát', N'Thủ Đức', 934888888);
+('DL01', N'Đại lý Minh Châu', N'Quận 1', '0934111111'),
+('DL02', N'Đại lý Hồng Phát', N'Quận 3', '0934222222'),
+('DL03', N'Đại lý Tân Lợi', N'Quận 5', '0934333333'),
+('DL04', N'Đại lý Gia Bảo', N'Quận 7', '0934444444'),
+('DL05', N'Đại lý Hoàng Long', N'Tân Bình', '0934555555'),
+('DL06', N'Đại lý Phúc An', N'Gò Vấp', '0934666666'),
+('DL07', N'Đại lý Thịnh Phát', N'Bình Thạnh', '0934777777'),
+('DL08', N'Đại lý Đại Phát', N'Thủ Đức', '0934888888');
 
----Sử dụng giá trị mặc định cho cột NgayNhap
-insert into PhieuNhap (MaPN, TongTien, MaNCC, MaNV)
-values
-('PN01', 500000, 'NCC01', 'NV01'),
-('PN02', 420000, 'NCC02', 'NV02'),
-('PN03', 380000, 'NCC03', 'NV03'),
-('PN04', 600000, 'NCC04', 'NV04'),
-('PN05', 250000, 'NCC05', 'NV05'),
-('PN06', 700000, 'NCC06', 'NV06'),
-('PN07', 450000, 'NCC07', 'NV07'),
-('PN08', 520000, 'NCC08', 'NV08');
+--- Dữ liệu bảng KhoHang
+insert into KhoHang values
+('K01', N'Kho Tổng', N'Quận Tân Phú, TP.HCM'),
+('K02', N'Kho Trung Chuyển', N'Quận 9, TP.HCM');
 
----Sử dụng giá trị mặc định cho cột NgayXuat
-insert into PhieuXuat (MaPX, TongTien, MaDL, MaNV)
-values
-('PX01', 300000, 'DL01', 'NV01'),
-('PX02', 280000, 'DL02', 'NV02'),
-('PX03', 350000, 'DL03', 'NV03'),
-('PX04', 400000, 'DL04', 'NV04'),
-('PX05', 200000, 'DL05', 'NV05'),
-('PX06', 450000, 'DL06', 'NV06'),
-('PX07', 320000, 'DL07', 'NV07'),
-('PX08', 380000, 'DL08', 'NV08');
+--- Dữ liệu bảng TaiKhoan
+insert into TaiKhoan values
+('admin', '123456', 'NV01', N'Quản Lý', 1),
+('nv_kho1', '123456', 'NV02', N'Nhân Viên', 1),
+('nv_kho2', '123456', 'NV03', N'Nhân Viên', 1);
+
+insert into PhieuNhap (MaPN, TongTien, MaNCC, MaNV) values
+('PN01', 0, 'NCC01', 'NV01'), ('PN02', 0, 'NCC02', 'NV02'),
+('PN03', 0, 'NCC03', 'NV03'), ('PN04', 0, 'NCC04', 'NV04'),
+('PN05', 0, 'NCC05', 'NV05'), ('PN06', 0, 'NCC06', 'NV06'),
+('PN07', 0, 'NCC07', 'NV07'), ('PN08', 0, 'NCC08', 'NV08');
+
+insert into PhieuXuat (MaPX, TongTien, MaDL, MaNV) values
+('PX01', 0, 'DL01', 'NV01'), ('PX02', 0, 'DL02', 'NV02'),
+('PX03', 0, 'DL03', 'NV03'), ('PX04', 0, 'DL04', 'NV04'),
+('PX05', 0, 'DL05', 'NV05'), ('PX06', 0, 'DL06', 'NV06'),
+('PX07', 0, 'DL07', 'NV07'), ('PX08', 0, 'DL08', 'NV08');
 
 insert into ChiTietPN values
 ('PN01', 'SP01', 20, 5000, 100000),
@@ -293,339 +342,120 @@ insert into ChiTietPX values
 ('PX07', 'SP07', 30, 6000, 180000),
 ('PX08', 'SP08', 7, 35000, 245000);
 
+--- Dữ liệu bảng PhieuKiemKe
+insert into PhieuKiemKe values
+('PKK01', '2026-05-01', 'NV01', N'Kiểm kê đầu tháng'),
+('PKK02', '2026-05-15', 'NV01', N'Kiểm kê ngẫu nhiên');
 
---- Xem toàn bộ sản phẩm
-SELECT * 
-FROM SanPham;
+--- Dữ liệu bảng ChiTietKiemKe
+insert into ChiTietKiemKe values
+('PKK01', 'SP01', 110, 108, -2, N'Hư hỏng nhãn dán'),
+('PKK01', 'SP02', 95, 95, 0, N'Bình thường'),
+('PKK02', 'SP03', 67, 65, -2, N'Mất nắp chai');
 
----Tìm các sản phẩm sắp hết hàng (số lượng < 10)
-SELECT *
-FROM SanPham
-WHERE SLTon < 10;
+-- =========================================================
+-- PHẦN 5: VIEWS, PROCEDURES, FUNCTIONS
+-- =========================================================
 
----Tính tổng số lượng sản phẩm trong kho
-SELECT SUM(SLTon) AS TongSoLuong
-FROM SanPham;
+GO
+CREATE VIEW vw_ThongTinSanPham AS
+SELECT sp.MaSP, sp.TenSP, lsp.TenLoai, sp.DVT, sp.SLTon, sp.DonGia, (sp.SLTon * sp.DonGia) AS TongGiaTriTien
+FROM SanPham sp JOIN LoaiSanPham lsp ON sp.MaLoai = lsp.MaLoai;
+GO
 
----Tính tổng giá trị kho
-SELECT 
-    SUM(SLTon * DonGia) AS TongGiaTriKho
-FROM SanPham;
-
----Danh sách phiếu nhập + nhân viên lập
-SELECT 
-    pn.MaPN,
-    pn.NgayNhap,
-    nv.HoTen,
-    pn.TongTien
-FROM PhieuNhap pn
-JOIN NhanVien nv ON pn.MaNV = nv.MaNV;
-
----Thống kê số sản phẩm theo từng loại
-SELECT 
-    lsp.TenLoai,
-    COUNT(sp.MaSP) AS SoLuongSP
-FROM LoaiSanPham lsp
-LEFT JOIN SanPham sp ON lsp.MaLoai = sp.MaLoai
-GROUP BY lsp.TenLoai;
-
----Thông tin chi tiết sản phẩm
-CREATE VIEW vw_ThongTinSanPham 
-AS
-SELECT 
-    sp.MaSP, 
-    sp.TenSP, 
-    lsp.TenLoai, 
-    sp.DVT, 
-    sp.SLTon, 
-    sp.DonGia,
-    (sp.SLTon * sp.DonGia) AS TongGiaTriTien
-FROM SanPham sp
-JOIN LoaiSanPham lsp ON sp.MaLoai = lsp.MaLoai;
----Báo cáo Thống kê	Xuất-Nhập-Tồn Kho
-CREATE VIEW vw_BaoCaoXuatNhapTon 
-AS
-SELECT 
-    sp.MaSP,
-    sp.TenSP,
-    lsp.TenLoai,
+CREATE VIEW vw_BaoCaoXuatNhapTon AS
+SELECT sp.MaSP, sp.TenSP, lsp.TenLoai,
     ISNULL(Nhap.TongSLNhap, 0) AS TongSoLuongNhap,
     ISNULL(Xuat.TongSLXuat, 0) AS TongSoLuongXuat,
     sp.SLTon AS SoLuongTonKhoThucTe
 FROM SanPham sp
 JOIN LoaiSanPham lsp ON sp.MaLoai = lsp.MaLoai
-LEFT JOIN (
-    -- Subquery tính tổng số lượng nhập của từng sản phẩm
-    SELECT MaSP, SUM(SoLuong) AS TongSLNhap
-    FROM ChiTietPN
-    GROUP BY MaSP
-) AS Nhap ON sp.MaSP = Nhap.MaSP
-LEFT JOIN (
-    -- Subquery tính tổng số lượng xuất của từng sản phẩm
-    SELECT MaSP, SUM(SoLuong) AS TongSLXuat
-    FROM ChiTietPX
-    GROUP BY MaSP
-) AS Xuat ON sp.MaSP = Xuat.MaSP;
+LEFT JOIN (SELECT MaSP, SUM(SoLuong) AS TongSLNhap FROM ChiTietPN GROUP BY MaSP) AS Nhap ON sp.MaSP = Nhap.MaSP
+LEFT JOIN (SELECT MaSP, SUM(SoLuong) AS TongSLXuat FROM ChiTietPX GROUP BY MaSP) AS Xuat ON sp.MaSP = Xuat.MaSP;
+GO
 
--- View xuất chi tiết phiếu nhập
-CREATE VIEW vw_ChiTietPhieuNhap
-AS
-SELECT
-    pn.MaPN,
-    pn.NgayNhap,
-    nv.HoTen        AS TenNhanVien,
-    ncc.TenNCC      AS TenNhaCungCap,
-    sp.TenSP,
-    ctpn.SoLuong,
-    ctpn.DonGiaNhap,
-    ctpn.ThanhTien
+CREATE VIEW vw_ChiTietPhieuNhap AS
+SELECT pn.MaPN, pn.NgayNhap, nv.HoTen AS TenNhanVien, ncc.TenNCC AS TenNhaCungCap, sp.TenSP, ctpn.SoLuong, ctpn.DonGiaNhap, ctpn.ThanhTien
 FROM PhieuNhap pn
-JOIN NhanVien    nv   ON pn.MaNV   = nv.MaNV
-JOIN NhaCungCap  ncc  ON pn.MaNCC  = ncc.MaNCC
-JOIN ChiTietPN   ctpn ON pn.MaPN   = ctpn.MaPN
-JOIN SanPham     sp   ON ctpn.MaSP = sp.MaSP;
+JOIN NhanVien nv ON pn.MaNV = nv.MaNV
+JOIN NhaCungCap ncc ON pn.MaNCC = ncc.MaNCC
+JOIN ChiTietPN ctpn ON pn.MaPN = ctpn.MaPN
+JOIN SanPham sp ON ctpn.MaSP = sp.MaSP;
+GO
 
--- View xuất chi tiết phiếu xuất
-CREATE VIEW vw_ChiTietPhieuXuat
-AS
-SELECT
-    px.MaPX,
-    px.NgayXuat,
-    nv.HoTen    AS TenNhanVien,
-    dl.TenDL    AS TenDaiLy,
-    dl.DiaChi   AS DiaChiDaiLy,
-    sp.TenSP,
-    ctpx.SoLuong,
-    ctpx.DonGiaNhap AS DonGiaXuat,
-    ctpx.ThanhTien
+CREATE VIEW vw_ChiTietPhieuXuat AS
+SELECT px.MaPX, px.NgayXuat, nv.HoTen AS TenNhanVien, dl.TenDL AS TenDaiLy, dl.DiaChi AS DiaChiDaiLy, sp.TenSP, ctpx.SoLuong, 
+       ctpx.DonGiaXuat,
+	   ctpx.ThanhTien
 FROM PhieuXuat px
-JOIN NhanVien   nv   ON px.MaNV   = nv.MaNV
-JOIN DaiLy      dl   ON px.MaDL   = dl.MaDL
-JOIN ChiTietPX  ctpx ON px.MaPX   = ctpx.MaPX
-JOIN SanPham    sp   ON ctpx.MaSP = sp.MaSP;
+JOIN NhanVien nv ON px.MaNV = nv.MaNV
+JOIN DaiLy dl ON px.MaDL = dl.MaDL
+JOIN ChiTietPX ctpx ON px.MaPX = ctpx.MaPX
+JOIN SanPham sp ON ctpx.MaSP = sp.MaSP;
+GO
 
---Tính tổng tiền thưởng nhân viên
 CREATE PROCEDURE sp_TinhTienThuong
-    @LuongCoBan MONEY,       
-    @HeSo FLOAT,            
-    @TienThuong MONEY OUTPUT 
-AS
-BEGIN  
-    SET @TienThuong = @LuongCoBan * @HeSo;
-END
+    @LuongCoBan MONEY, @HeSo FLOAT, @TienThuong MONEY OUTPUT 
+AS BEGIN SET @TienThuong = @LuongCoBan * @HeSo; END
 GO
-DECLARE @luong MONEY;
-DECLARE @heso FLOAT;
-DECLARE @tong_tien_thuong MONEY;
-SET @luong = 15000000;
-SET @heso = 1.5;
-EXEC sp_TinhTienThuong 
-    @LuongCoBan = @luong,
-    @HeSo = @heso,
-    @TienThuong = @tong_tien_thuong OUTPUT;
-SELECT @tong_tien_thuong AS N'Tổng Tiền Thưởng Nhân Viên';
 
---Lấy tổng tiền phiếu nhập
 CREATE PROCEDURE sp_LayTongTienPhieuNhap
-    @manv     VARCHAR(10),
-    @mancc    VARCHAR(10),
-    @mapn     VARCHAR(10),
-    @tongtien MONEY OUTPUT
-AS
-BEGIN
-    SELECT @tongtien = TongTien
-    FROM PhieuNhap
-    WHERE MaPN  = @mapn
-      AND MaNV  = @manv
-      AND MaNCC = @mancc;
+    @manv VARCHAR(10), @mancc VARCHAR(10), @mapn VARCHAR(10), @tongtien MONEY OUTPUT
+AS BEGIN
+    SELECT @tongtien = TongTien FROM PhieuNhap WHERE MaPN = @mapn AND MaNV = @manv AND MaNCC = @mancc;
 END
 GO
 
-declare @_tongtien money
-declare @_manv varchar(10) ='NV01'
-declare @_mancc varchar(10) = 'NCC01'
-declare @_mapn varchar(10) ='PN01'
-exec sp_laytongtienphieunhap
-    @manv= @_manv,
-    @mancc = @_mancc,
-    @mapn = @_mapn,
-    @tongtien = @_tongtien output
-
-select @_tongtien as N'Tổng Tiền Phiếu Nhập'
-
---Tính tổng số lượng sản phẩm theo phiếu xuất
 CREATE PROCEDURE sp_TongSoLuongSanPhamTheoPhieuXuat
     @mapx VARCHAR(10)
-AS
-BEGIN
-    SELECT 
-        sp.MaSP,
-        sp.TenSP,
-        SUM(ctpx.SoLuong) AS TongSoLuong
-    FROM ChiTietPX ctpx
-    JOIN SanPham sp ON ctpx.MaSP = sp.MaSP
-    WHERE ctpx.MaPX = @mapx
-    GROUP BY sp.MaSP, sp.TenSP;
+AS BEGIN
+    SELECT sp.MaSP, sp.TenSP, SUM(ctpx.SoLuong) AS TongSoLuong
+    FROM ChiTietPX ctpx JOIN SanPham sp ON ctpx.MaSP = sp.MaSP
+    WHERE ctpx.MaPX = @mapx GROUP BY sp.MaSP, sp.TenSP;
 END
 GO
 
--- Gọi thử với phiếu xuất PX01
-EXEC sp_TongSoLuongSanPhamTheoPhieuXuat @mapx = 'PX01'
-
-
--- Kiểm tra số lượng tồn
 CREATE PROCEDURE sp_TongTonKhoTheoLoai
-    @MaLoai CHAR(10),              
-    @TongSoLuong INT OUTPUT      
-AS
-BEGIN
+    @MaLoai CHAR(10), @TongSoLuong INT OUTPUT  
+AS BEGIN
     IF NOT EXISTS (SELECT 1 FROM LoaiSanPham WHERE MaLoai = @MaLoai)
-    BEGIN
-        SET @TongSoLuong = 0;
-        PRINT N'Mã loại không tồn tại!';
-        RETURN;
-    END
-
-    SELECT @TongSoLuong = SUM(SLTon)
-    FROM SanPham
-    WHERE MaLoai = @MaLoai;
-
-    IF @TongSoLuong IS NULL
-        SET @TongSoLuong = 0;
+    BEGIN SET @TongSoLuong = 0; PRINT N'Mã loại không tồn tại!'; RETURN; END
+    SELECT @TongSoLuong = SUM(SLTon) FROM SanPham WHERE MaLoai = @MaLoai;
+    IF @TongSoLuong IS NULL SET @TongSoLuong = 0;
 END
+GO
 
-DECLARE @KetQuaTong INT;
-DECLARE @MaLoaiCanCheck CHAR(10) = 'L01';
-
-EXEC sp_TongTonKhoTheoLoai
-    @MaLoai = @MaLoaiCanCheck,
-    @TongSoLuong = @KetQuaTong OUTPUT;
-
-SELECT @MaLoaiCanCheck AS MaLoai, 
-       @KetQuaTong AS TongSoLuongTonTrongKho;
-
-
-
--- =============================================
--- CÂU 1 - DẠNG 1: fn_PhieuNhapTheoKhoangThoiGian
--- =============================================
-CREATE FUNCTION fn_PhieuNhapTheoKhoangThoiGian
+CREATE FUNCTION fn_PhieuNhapTheoKhoangThoiGian (@NgayBatDau DATETIME, @NgayKetThuc DATETIME)
+RETURNS TABLE AS RETURN
 (
-    @NgayBatDau DATETIME,
-    @NgayKetThuc DATETIME
-)
-RETURNS TABLE
-AS
-RETURN
-(
-    SELECT
-        pn.MaPN,
-        pn.NgayNhap,
-        nv.HoTen        AS TenNhanVien,
-        ncc.TenNCC      AS TenNhaCungCap,
-        sp.TenSP,
-        ctpn.SoLuong,
-        ctpn.DonGiaNhap,
-        ctpn.ThanhTien
+    SELECT pn.MaPN, pn.NgayNhap, nv.HoTen AS TenNhanVien, ncc.TenNCC AS TenNhaCungCap, sp.TenSP, ctpn.SoLuong, ctpn.DonGiaNhap, ctpn.ThanhTien
     FROM PhieuNhap pn
-    JOIN NhanVien   nv   ON pn.MaNV  = nv.MaNV
-    JOIN NhaCungCap ncc  ON pn.MaNCC = ncc.MaNCC
-    JOIN ChiTietPN  ctpn ON pn.MaPN  = ctpn.MaPN
-    JOIN SanPham    sp   ON ctpn.MaSP = sp.MaSP
+    JOIN NhanVien nv ON pn.MaNV = nv.MaNV JOIN NhaCungCap ncc ON pn.MaNCC = ncc.MaNCC
+    JOIN ChiTietPN ctpn ON pn.MaPN = ctpn.MaPN JOIN SanPham sp ON ctpn.MaSP = sp.MaSP
     WHERE pn.NgayNhap BETWEEN @NgayBatDau AND @NgayKetThuc
 );
-
-
--- Gọi thử
-SELECT *
-FROM fn_PhieuNhapTheoKhoangThoiGian('2024-01-01', '2026-12-31');
 GO
 
-
--- =============================================
--- CÂU 2 - DẠNG 1: fn_ThongKeSanPhamTheoLoai
--- =============================================
-CREATE FUNCTION fn_ThongKeSanPhamTheoLoai
+CREATE FUNCTION fn_ThongKeSanPhamTheoLoai (@MaLoai CHAR(10))
+RETURNS TABLE AS RETURN
 (
-    @MaLoai CHAR(10)
-)
-RETURNS TABLE
-AS
-RETURN
-(
-    SELECT
-        sp.MaSP,
-        sp.TenSP,
-        sp.DVT,
-        sp.DonGia,
-        ISNULL(Nhap.TongSLNhap, 0)  AS TongSLNhap,
-        ISNULL(Xuat.TongSLXuat, 0)  AS TongSLXuat,
-        sp.SLTon                    AS SLTonThucTe
+    SELECT sp.MaSP, sp.TenSP, sp.DVT, sp.DonGia, ISNULL(Nhap.TongSLNhap, 0) AS TongSLNhap, ISNULL(Xuat.TongSLXuat, 0) AS TongSLXuat, sp.SLTon AS SLTonThucTe
     FROM SanPham sp
-    LEFT JOIN (
-        SELECT MaSP, SUM(SoLuong) AS TongSLNhap
-        FROM ChiTietPN
-        GROUP BY MaSP
-    ) AS Nhap ON sp.MaSP = Nhap.MaSP
-    LEFT JOIN (
-        SELECT MaSP, SUM(SoLuong) AS TongSLXuat
-        FROM ChiTietPX
-        GROUP BY MaSP
-    ) AS Xuat ON sp.MaSP = Xuat.MaSP
+    LEFT JOIN (SELECT MaSP, SUM(SoLuong) AS TongSLNhap FROM ChiTietPN GROUP BY MaSP) AS Nhap ON sp.MaSP = Nhap.MaSP
+    LEFT JOIN (SELECT MaSP, SUM(SoLuong) AS TongSLXuat FROM ChiTietPX GROUP BY MaSP) AS Xuat ON sp.MaSP = Xuat.MaSP
     WHERE sp.MaLoai = @MaLoai
 );
-
--- Gọi thử với loại L01 (Đồ uống)
-SELECT *
-FROM fn_ThongKeSanPhamTheoLoai('L01');
 GO
 
-
--- =============================================
--- CÂU 3 - DẠNG 2: fn_LichSuGiaoDichNhanVien
--- =============================================
-CREATE FUNCTION fn_LichSuGiaoDichNhanVien
-(
-    @MaNV CHAR(10)
-)
-RETURNS @KetQua TABLE
-(
-    LoaiPhieu   NVARCHAR(10),
-    MaPhieu     CHAR(10),
-    NgayLap     DATETIME,
-    DoiTac      NVARCHAR(100),
-    TongTien    MONEY
-)
-AS
-BEGIN
-    -- Nếu nhân viên không tồn tại thì trả về bảng rỗng luôn
-    IF NOT EXISTS (SELECT 1 FROM NhanVien WHERE MaNV = @MaNV)
-        RETURN;
-
-    -- Insert phiếu nhập
+CREATE FUNCTION fn_LichSuGiaoDichNhanVien (@MaNV CHAR(10))
+RETURNS @KetQua TABLE (LoaiPhieu NVARCHAR(10), MaPhieu CHAR(10), NgayLap DATETIME, DoiTac NVARCHAR(100), TongTien MONEY)
+AS BEGIN
+    IF NOT EXISTS (SELECT 1 FROM NhanVien WHERE MaNV = @MaNV) RETURN;
     INSERT INTO @KetQua (LoaiPhieu, MaPhieu, NgayLap, DoiTac, TongTien)
-    SELECT
-        N'Nhập'         AS LoaiPhieu,
-        pn.MaPN         AS MaPhieu,
-        pn.NgayNhap     AS NgayLap,
-        ncc.TenNCC      AS DoiTac,
-        pn.TongTien
-    FROM PhieuNhap pn
-    JOIN NhaCungCap ncc ON pn.MaNCC = ncc.MaNCC
-    WHERE pn.MaNV = @MaNV;
-
-    -- Insert phiếu xuất
+    SELECT N'Nhập', pn.MaPN, pn.NgayNhap, ncc.TenNCC, pn.TongTien FROM PhieuNhap pn JOIN NhaCungCap ncc ON pn.MaNCC = ncc.MaNCC WHERE pn.MaNV = @MaNV;
+    
     INSERT INTO @KetQua (LoaiPhieu, MaPhieu, NgayLap, DoiTac, TongTien)
-    SELECT
-        N'Xuất'         AS LoaiPhieu,
-        px.MaPX         AS MaPhieu,
-        px.NgayXuat     AS NgayLap,
-        dl.TenDL        AS DoiTac,
-        px.TongTien
-    FROM PhieuXuat px
-    JOIN DaiLy dl ON px.MaDL = dl.MaDL
-    WHERE px.MaNV = @MaNV;
-
+    SELECT N'Xuất', px.MaPX, px.NgayXuat, dl.TenDL, px.TongTien FROM PhieuXuat px JOIN DaiLy dl ON px.MaDL = dl.MaDL WHERE px.MaNV = @MaNV;
     RETURN;
 END;
 GO
