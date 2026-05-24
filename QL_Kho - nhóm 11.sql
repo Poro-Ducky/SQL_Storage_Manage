@@ -393,6 +393,20 @@ JOIN DaiLy dl ON px.MaDL = dl.MaDL
 JOIN ChiTietPX ctpx ON px.MaPX = ctpx.MaPX
 JOIN SanPham sp ON ctpx.MaSP = sp.MaSP;
 GO
+
+CREATE VIEW vw_NhaCungCapTheoSanPham AS
+SELECT DISTINCT
+    sp.MaSP AS [Mã Sản Phẩm],
+    sp.TenSP AS [Tên Sản Phẩm],
+    sp.SLTon AS [Số Lượng Tồn],
+    ncc.TenNCC AS [Tên Nhà Cung Cấp],
+    ncc.SDT AS [Số Điện Thoại NCC],
+    ncc.DiaChi AS [Địa Chỉ]
+FROM SanPham sp
+JOIN ChiTietPN ctpn ON sp.MaSP = ctpn.MaSP
+JOIN PhieuNhap pn ON ctpn.MaPN = pn.MaPN
+JOIN NhaCungCap ncc ON pn.MaNCC = ncc.MaNCC;
+GO
 ----------------------------PROCEDURE----------------------------------
 CREATE PROCEDURE sp_TinhTienThuong
     @LuongCoBan MONEY, @HeSo FLOAT, @TienThuong MONEY OUTPUT 
@@ -585,4 +599,7 @@ GO
 SELECT *
 FROM fn_LichSuGiaoDichNhanVien('NV99');
 GO
+
+
+
 
