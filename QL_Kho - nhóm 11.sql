@@ -3,7 +3,7 @@
 ---Nguyễn Hoàng Hiển Long
 ---Nguyễn Hữu Nhật
 ---Võ Thành Long
----Đặng Thành Hứa
+
 
 CREATE DATABASE QL_KHO
 GO
@@ -354,9 +354,9 @@ insert into ChiTietKiemKe values
 ('PKK02', 'SP03', 67, 65, -2, N'Mất nắp chai');
 
 -- =========================================================
--- PHẦN 5: VIEWS, PROCEDURES, FUNCTIONS
+-- PHẦN 5: VIEWS, PROCEDURES, FUNCTIONS, CURSORS
 -- =========================================================
-
+----------------------------VIEW----------------------------------
 GO
 CREATE VIEW vw_ThongTinSanPham AS
 SELECT sp.MaSP, sp.TenSP, lsp.TenLoai, sp.DVT, sp.SLTon, sp.DonGia, (sp.SLTon * sp.DonGia) AS TongGiaTriTien
@@ -393,7 +393,7 @@ JOIN DaiLy dl ON px.MaDL = dl.MaDL
 JOIN ChiTietPX ctpx ON px.MaPX = ctpx.MaPX
 JOIN SanPham sp ON ctpx.MaSP = sp.MaSP;
 GO
-
+----------------------------PROCEDURE----------------------------------
 CREATE PROCEDURE sp_TinhTienThuong
     @LuongCoBan MONEY, @HeSo FLOAT, @TienThuong MONEY OUTPUT 
 AS BEGIN SET @TienThuong = @LuongCoBan * @HeSo; END
@@ -419,12 +419,12 @@ CREATE PROCEDURE sp_TongTonKhoTheoLoai
     @MaLoai CHAR(10), @TongSoLuong INT OUTPUT  
 AS BEGIN
     IF NOT EXISTS (SELECT 1 FROM LoaiSanPham WHERE MaLoai = @MaLoai)
-    BEGIN SET @TongSoLuong = 0; PRINT N'Mã loại không tồn tại!'; RETURN; END
+    BEGIN SET @TongSoLuong = 0; RETURN; END
     SELECT @TongSoLuong = SUM(SLTon) FROM SanPham WHERE MaLoai = @MaLoai;
     IF @TongSoLuong IS NULL SET @TongSoLuong = 0;
 END
 GO
-
+----------------------------FUNCTION----------------------------------
 CREATE FUNCTION fn_PhieuNhapTheoKhoangThoiGian (@NgayBatDau DATETIME, @NgayKetThuc DATETIME)
 RETURNS TABLE AS RETURN
 (
@@ -460,13 +460,123 @@ AS BEGIN
 END;
 GO
 
--- Gọi thử với nhân viên NV01
-SELECT *
-FROM fn_LichSuGiaoDichNhanVien('NV01')
-ORDER BY NgayLap, LoaiPhieu;
+----------------------------CURSOR----------------------------------
+CREATE PROCEDURE sp_BaoCaoGiaTriTonKhoTheoLoai_Cursor
+AS
+BEGIN
+    DECLARE @MALOAI char(10), @TENLOAI nvarchar(100), @TONGGIATRI decimal(18)
+    DECLARE cs_BaoCaoGiaTriTonKhoTheoLoai CURSOR FOR
+        SELECT MaLoai, TenLoai FROM LoaiSanPham
+
+    OPEN cs_BaoCaoGiaTriTonKhoTheoLoai
+    FETCH NEXT FROM cs_BaoCaoGiaTriTonKhoTheoLoai INTO @MALOAI, @TENLOAI
+
+    WHILE(@@FETCH_STATUS = 0)
+    BEGIN
+        SELECT @TONGGIATRI = SUM(SLTon * DonGia) FROM SanPham WHERE MaLoai = @MALOAI
+        IF @TONGGIATRI IS NULL SET @TONGGIATRI = 0
+
+        IF @TONGGIATRI = 0
+            PRINT N'Loại sản phẩm: ' + @TENLOAI + N' - Không có hàng tồn kho.'
+        ELSE
+            PRINT N'Loại sản phẩm: ' + @TENLOAI + N' - Tổng giá trị tồn: ' + CAST(@TONGGIATRI AS NVARCHAR(50)) + N' VNĐ'
+
+        FETCH NEXT FROM cs_BaoCaoGiaTriTonKhoTheoLoai INTO @MALOAI, @TENLOAI
+    END
+
+    CLOSE cs_BaoCaoGiaTriTonKhoTheoLoai
+    DEALLOCATE cs_BaoCaoGiaTriTonKhoTheoLoai
+END
 GO
 
--- Gọi thử với mã không tồn tại → trả về bảng rỗng
-SELECT *
-FROM fn_LichSuGiaoDichNhanVien('NV99');
+CREATE PROCEDURE sp_XetThuongNhanVienXuatKho_Cursor
+AS
+BEGIN
+    DECLARE @MANV char(10), @HOTEN nvarchar(100), @TONGTIEN decimal(18,2),@TIENTHUONG decimal(18,2)
+    DECLARE cs_XetThuongNhanVienXuatKho CURSOR FOR
+        SELECT MaNV,HoTen FROM NhanVien
+
+    OPEN cs_XetThuongNhanVienXuatKho
+    FETCH NEXT FROM cs_XetThuongNhanVienXuatKho INTO @MANV,@HOTEN
+    WHILE(@@FETCH_STATUS=0)
+    BEGIN
+        SELECT @TONGTIEN = SUM(TongTien)
+        FROM PhieuXuat
+        WHERE MaNV=@MANV
+
+        IF @TONGTIEN IS NULL SET @TONGTIEN=0
+        IF @TONGTIEN >=1000000
+        BEGIN
+            SET @TIENTHUONG=@TONGTIEN*0.1
+        END
+        ELSE IF @TONGTIEN <500000
+        BEGIN
+            SET @TIENTHUONG =0
+        END
+        ELSE
+            SET @TIENTHUONG=@TONGTIEN*0.05
+
+        PRINT N'Nhân viên: '+@HOTEN+ N' - Doanh số xuất : '+CAST(@TONGTIEN AS Nvarchar(50))+ N'VNĐ'+ N' - Tiền thưởng :'+ CAST(@TIENTHUONG AS Nvarchar(50))+ N'VNĐ'
+        FETCH NEXT FROM cs_XetThuongNhanVienXuatKho INTO @MANV,@HOTEN
+    END
+    CLOSE cs_XetThuongNhanVienXuatKho
+    DEALLOCATE cs_XetThuongNhanVienXuatKho
+END
+-- =========================================================
+-- PHẦN 6: THỰC THI CÁC HÀM, THỦ TỤC, VIEW
+-- =========================================================
+
+SELECT * FROM vw_ThongTinSanPham;
+GO
+
+SELECT * FROM vw_BaoCaoXuatNhapTon;
+GO
+
+SELECT * FROM vw_ChiTietPhieuNhap;
+GO
+
+SELECT * FROM vw_ChiTietPhieuXuat;
+GO
+
+DECLARE @TongTienThuong MONEY;
+EXEC sp_TinhTienThuong @LuongCoBan = 15000000, @HeSo = 1.5, @TienThuong = @TongTienThuong OUTPUT;
+SELECT @TongTienThuong AS TongTienThuong;
+GO
+
+DECLARE @TongTienPhieuNhap MONEY;
+EXEC sp_LayTongTienPhieuNhap @manv = 'NV01', @mancc = 'NCC01', @mapn = 'PN01', @tongtien = @TongTienPhieuNhap OUTPUT;
+SELECT @TongTienPhieuNhap AS TongTienPhieuNhap;
+GO
+
+EXEC sp_TongSoLuongSanPhamTheoPhieuXuat @mapx = 'PX01';
+GO
+
+DECLARE @TongTon INT;
+EXEC sp_TongTonKhoTheoLoai @MaLoai = 'L01', @TongSoLuong = @TongTon OUTPUT;
+SELECT @TongTon AS TongTonKhoTheoLoai;
+GO
+
+SELECT * FROM fn_PhieuNhapTheoKhoangThoiGian('2024-01-01', '2026-12-31');
+GO
+
+SELECT * FROM fn_ThongKeSanPhamTheoLoai('L01');
+GO
+
+SELECT * FROM fn_LichSuGiaoDichNhanVien('NV01');
+GO
+
+INSERT INTO ChiTietPN (MaPN, MaSP, SoLuong, DonGiaNhap, ThanhTien) 
+VALUES ('PN02', 'SP02', 100, 9000, 900000);
+GO
+
+SELECT MaSP, TenSP, SLTon FROM SanPham WHERE MaSP = 'SP02';
+GO
+
+SELECT MaPN, TongTien FROM PhieuNhap WHERE MaPN = 'PN02';
+GO
+
+EXEC sp_BaoCaoGiaTriTonKhoTheoLoai_Cursor;
+GO
+
+EXEC sp_XetThuongNhanVienXuatKho_Cursor;
 GO
