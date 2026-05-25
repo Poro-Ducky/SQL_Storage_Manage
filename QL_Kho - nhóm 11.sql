@@ -595,6 +595,67 @@ BEGIN
     CLOSE cs_XetThuongNhanVienXuatKho
     DEALLOCATE cs_XetThuongNhanVienXuatKho
 END
+
+----------------------------SAO LUU----------------------------------
+ 
+ALTER DATABASE QL_KHO SET RECOVERY SIMPLE;
+GO
+ 
+BACKUP DATABASE QL_KHO
+TO DISK = N'D:\BT Nhóm đại học\HQT - CSDL\QL_KHO_Simple_Full.bak'
+WITH
+    NAME        = N'QL_KHO - Simple Full Backup',
+    DESCRIPTION = N'Sao luu toan bo - che do Simple',
+    FORMAT,
+    INIT,
+    STATS = 10;
+GO
+ 
+BACKUP DATABASE QL_KHO
+TO DISK = N'D:\BT Nhóm đại học\HQT - CSDL\QL_KHO_Simple_Diff.bak'
+WITH
+    NAME        = N'QL_KHO - Simple Differential Backup',
+    DESCRIPTION = N'Sao luu vi sai - che do Simple',
+    DIFFERENTIAL,
+    NOINIT,
+    STATS = 10;
+GO
+
+
+ALTER DATABASE QL_KHO SET RECOVERY FULL;
+GO
+ 
+BACKUP DATABASE QL_KHO
+TO DISK = N'D:\BT Nhóm đại học\HQT - CSDL\QL_KHO_Full_Full.bak'
+WITH
+    NAME        = N'QL_KHO - Full Recovery Full Backup',
+    DESCRIPTION = N'Sao luu toan bo - che do Full Recovery',
+    FORMAT,
+    INIT,
+    STATS = 10;
+GO
+ 
+
+BACKUP DATABASE QL_KHO
+TO DISK = N'D:\BT Nhóm đại học\HQT - CSDL\QL_KHO_Full_Diff.bak'
+WITH
+    NAME        = N'QL_KHO - Full Recovery Differential Backup',
+    DESCRIPTION = N'Sao luu vi sai - che do Full Recovery',
+    DIFFERENTIAL,
+    NOINIT,
+    STATS = 10;
+GO
+ 
+
+BACKUP LOG QL_KHO
+TO DISK = N'D:\BT Nhóm đại học\HQT - CSDL\QL_KHO_Full_Log.bak'
+WITH
+    NAME        = N'QL_KHO - Full Recovery Log Backup',
+    DESCRIPTION = N'Sao luu nhat ky giao dich - che do Full Recovery',
+    NOINIT,
+    STATS = 10;
+GO
+
 -- =========================================================
 -- PHẦN 6: THỰC THI CÁC HÀM, THỦ TỤC, VIEW
 -- =========================================================
@@ -685,4 +746,50 @@ GO
 
 -- Kiem tra ket qua
 SELECT * FROM NhaCungCap WHERE MaNCC IN ('NCC01', 'NCC02');
+GO
+
+-- =========================================================
+-- PHẦN 7: TẠO TÀI KHOẢN HỆ THỐNG VÀ PHÂN QUYỀN (SECURITY)
+-- =========================================================
+USE QL_KHO
+GO
+
+----------------------------TẠO LOGIN---------------------------------
+
+CREATE LOGIN Login_QuanLy WITH PASSWORD = 'Password123';
+GO
+
+
+CREATE LOGIN Login_NhanVien WITH PASSWORD = 'Password456';
+GO
+
+
+----------------------------TẠO USER---------------------------------
+
+CREATE USER User_QuanLy FOR LOGIN Login_QuanLy;
+GO
+
+CREATE USER User_NhanVien FOR LOGIN Login_NhanVien;
+GO
+
+
+----------------------------PHÂN QUYỀN-------------------------------
+
+ALTER ROLE db_owner ADD MEMBER User_QuanLy;
+GO
+
+GRANT SELECT ON SanPham TO User_NhanVien;
+GRANT SELECT ON LoaiSanPham TO User_NhanVien;
+GRANT SELECT ON KhoHang TO User_NhanVien;
+
+GRANT SELECT, INSERT, UPDATE ON PhieuNhap TO User_NhanVien;
+GRANT SELECT, INSERT, UPDATE ON ChiTietPN TO User_NhanVien;
+GRANT SELECT, INSERT, UPDATE ON PhieuXuat TO User_NhanVien;
+GRANT SELECT, INSERT, UPDATE ON ChiTietPX TO User_NhanVien;
+
+GRANT SELECT, INSERT, UPDATE ON PhieuKiemKe TO User_NhanVien;
+GRANT SELECT, INSERT, UPDATE ON ChiTietKiemKe TO User_NhanVien;
+
+GRANT SELECT ON vw_ThongTinSanPham TO User_NhanVien;
+GRANT SELECT ON vw_BaoCaoXuatNhapTon TO User_NhanVien;
 GO
