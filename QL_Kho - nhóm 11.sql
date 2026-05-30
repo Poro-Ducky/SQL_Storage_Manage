@@ -203,21 +203,34 @@ alter table ChiTietKiemKe add constraint FK_CTKK_PhieuKiemKe foreign key (MaPKK)
 alter table ChiTietKiemKe add constraint FK_CTKK_SanPham foreign key (MaSP) references SanPham(MaSP);
 
 -- =========================================================
--- PHẦN 3: TRIGGER THỰC THI NGHIỆP VỤ LOGIC
+-- PHẦN 3: TRIGGER THỰC THI NGHIỆP VỤ LOGIC 
 -- =========================================================
 
 GO
---- Trigger tự động cộng Tồn Kho và tính Tổng Tiền khi NHẬP HÀNG
-CREATE TRIGGER trg_CapNhatPhieuNhap
+--- 1. Trigger tự động cộng Tồn Kho, tính Thành Tiền và Tổng Tiền khi NHẬP HÀNG
+CREATE  TRIGGER trg_CapNhatPhieuNhap
 ON ChiTietPN
 AFTER INSERT, UPDATE, DELETE
 AS
 BEGIN
+    SET NOCOUNT ON;
+
+    
+    IF EXISTS (SELECT 1 FROM inserted)
+    BEGIN
+        UPDATE ct
+        SET ct.ThanhTien = ct.SoLuong * ct.DonGiaNhap
+        FROM ChiTietPN ct
+        JOIN inserted i ON ct.MaPN = i.MaPN AND ct.MaSP = i.MaSP;
+    END
+
+   
     UPDATE sp
     SET sp.SLTon = sp.SLTon - ISNULL(d.SoLuong, 0) + ISNULL(i.SoLuong, 0)
     FROM SanPham sp
     LEFT JOIN deleted d ON sp.MaSP = d.MaSP
     LEFT JOIN inserted i ON sp.MaSP = i.MaSP;
+
 
     DECLARE @DanhSachMaPN TABLE (MaPN CHAR(10));
     INSERT INTO @DanhSachMaPN SELECT MaPN FROM inserted UNION SELECT MaPN FROM deleted;
@@ -229,18 +242,31 @@ BEGIN
 END
 GO
 
---- Trigger tự động trừ Tồn Kho và tính Tổng Tiền khi XUẤT HÀNG
-CREATE TRIGGER trg_CapNhatPhieuXuat
+--- 2. Trigger tự động trừ Tồn Kho, tính Thành Tiền và Tổng Tiền khi XUẤT HÀNG
+CREATE  TRIGGER trg_CapNhatPhieuXuat
 ON ChiTietPX
 AFTER INSERT, UPDATE, DELETE
 AS
 BEGIN
+    SET NOCOUNT ON;
+
+
+    IF EXISTS (SELECT 1 FROM inserted)
+    BEGIN
+        UPDATE ct
+        SET ct.ThanhTien = ct.SoLuong * ct.DonGiaXuat
+        FROM ChiTietPX ct
+        JOIN inserted i ON ct.MaPX = i.MaPX AND ct.MaSP = i.MaSP;
+    END
+
+
     UPDATE sp
     SET sp.SLTon = sp.SLTon + ISNULL(d.SoLuong, 0) - ISNULL(i.SoLuong, 0)
     FROM SanPham sp
     LEFT JOIN deleted d ON sp.MaSP = d.MaSP
     LEFT JOIN inserted i ON sp.MaSP = i.MaSP;
 
+ 
     DECLARE @DanhSachMaPX TABLE (MaPX CHAR(10));
     INSERT INTO @DanhSachMaPX SELECT MaPX FROM inserted UNION SELECT MaPX FROM deleted;
 
@@ -251,6 +277,27 @@ BEGIN
 END
 GO
 
+--- 3. Trigger tự động tính Số Lượng Lệch và Cập nhật Tồn Kho khi KIỂM KÊ
+CREATE  TRIGGER trg_CapNhatKiemKe
+ON ChiTietKiemKe
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+   
+    UPDATE ct
+    SET ct.SLLech = i.SLThucTe - i.SLHeThong
+    FROM ChiTietKiemKe ct
+    JOIN inserted i ON ct.MaPKK = i.MaPKK AND ct.MaSP = i.MaSP;
+
+
+    UPDATE sp
+    SET sp.SLTon = i.SLThucTe
+    FROM SanPham sp
+    JOIN inserted i ON sp.MaSP = i.MaSP;
+END
+GO
 -- =========================================================
 -- PHẦN 4: THÊM DỮ LIỆU MẪU
 -- =========================================================
@@ -792,4 +839,123 @@ GRANT SELECT, INSERT, UPDATE ON ChiTietKiemKe TO User_NhanVien;
 
 GRANT SELECT ON vw_ThongTinSanPham TO User_NhanVien;
 GRANT SELECT ON vw_BaoCaoXuatNhapTon TO User_NhanVien;
+GO
+
+-- =========================================================
+-- PHẦN 8: GIAO TÁC VÀ MỨC ĐỘ CÔ LẬP 
+-- =========================================================
+GO
+
+
+CREATE PROCEDURE sp_GiaoTac_XoaPhieuXuat
+    @MaPX CHAR(10)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SET TRANSACTION ISOLATION LEVEL SERIALIZABLE; 
+    
+    BEGIN TRY
+        BEGIN TRAN;
+
+        DELETE FROM ChiTietPX WHERE MaPX = @MaPX;
+        DELETE FROM PhieuXuat WHERE MaPX = @MaPX;
+
+        COMMIT TRAN;
+        PRINT N'Đã xóa Phiếu xuất an toàn (Không bị Phantom Read).';
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRAN;
+        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+        RAISERROR (N'Lỗi khi xóa Phiếu Xuất: %s', 16, 1, @ErrorMessage);
+    END CATCH
+END
+GO
+
+
+CREATE  PROCEDURE sp_GiaoTac_XoaPhieuNhap
+    @MaPN CHAR(10)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+    
+    BEGIN TRY
+        BEGIN TRAN; 
+
+        DELETE FROM ChiTietPN WHERE MaPN = @MaPN;
+        DELETE FROM PhieuNhap WHERE MaPN = @MaPN;
+
+        COMMIT TRAN; 
+        PRINT N'Đã xóa Phiếu nhập an toàn (Không bị Phantom Read).';
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRAN; 
+        DECLARE @ErrorMessage NVARCHAR(4000) = ERROR_MESSAGE();
+        RAISERROR (N'Lỗi khi xóa Phiếu Nhập: %s', 16, 1, @ErrorMessage);
+    END CATCH
+END
+GO
+
+
+CREATE PROCEDURE sp_GiaoTac_ThemChiTietPhieuXuat
+    @MaPX CHAR(10),
+    @MaSP CHAR(10),
+    @SoLuong INT,
+    @DonGiaXuat MONEY
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+    
+    BEGIN TRY
+        BEGIN TRAN;
+        
+        DECLARE @SLTonHienTai INT;
+
+        SELECT @SLTonHienTai = SLTon FROM SanPham WHERE MaSP = @MaSP; 
+
+        IF @SLTonHienTai < @SoLuong
+        BEGIN
+            RAISERROR(N'Kho không đủ hàng! Tồn kho hiện tại: %d.', 16, 1, @SLTonHienTai);
+        END
+
+        INSERT INTO ChiTietPX (MaPX, MaSP, SoLuong, DonGiaXuat)
+        VALUES (@MaPX, @MaSP, @SoLuong, @DonGiaXuat);
+
+        COMMIT TRAN;
+        PRINT N'Xuất kho thành công, dữ liệu an toàn khỏi Lost Update!';
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRAN;
+        DECLARE @ErrorMsg NVARCHAR(4000) = ERROR_MESSAGE();
+        RAISERROR (@ErrorMsg, 16, 1);
+    END CATCH
+END
+GO
+
+
+CREATE  PROCEDURE sp_GiaoTac_XemTonKhoAnToan
+    @MaSP CHAR(10)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SET TRANSACTION ISOLATION LEVEL READ COMMITTED; 
+
+    BEGIN TRY
+        BEGIN TRAN;
+        
+  
+        SELECT MaSP, TenSP, SLTon 
+        FROM SanPham 
+        WHERE MaSP = @MaSP;
+
+        COMMIT TRAN;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRAN;
+    END CATCH
+END
 GO
