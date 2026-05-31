@@ -18,8 +18,10 @@ GO
 create table LoaiSanPham
 (
 	MaLoai char (10) primary key not null,
-	TenLoai nvarchar (100)
+	TenLoai nvarchar (100),
+    GhiChu nvarchar(max) default null
 );
+
 
 ---Bảng sản phẩm
 create table SanPham
@@ -29,9 +31,13 @@ create table SanPham
 	DVT nvarchar (10),
 	SLTon int,
 	MaLoai char (10),
-	DonGia int,
+	DonGia money,
+    HinhAnh NVARCHAR(500) NULL,
+    IsActive BIT NOT NULL DEFAULT 1,
 	constraint PK_SanPham primary key (MaSP)
 );
+
+
 
 ---Bảng nhân viên
 create table NhanVien
@@ -50,6 +56,7 @@ create table NhaCungCap
 	TenNCC nvarchar (100),
 	SDT varchar(15),
 	DiaChi nvarchar (100),
+    IsActive BIT NOT NULL DEFAULT 1,
 	Email nvarchar (100)
 );
 
@@ -59,8 +66,10 @@ create table DaiLy
 	MaDL char (10) primary key not null,
 	TenDL nvarchar (100),
 	DiaChi nvarchar (100),
+    IsActive BIT NOT NULL DEFAULT 1,
 	SDT varchar(15)
 );
+
 
 ---Bảng phiếu nhập
 create table PhieuNhap
@@ -142,6 +151,7 @@ create table ChiTietKiemKe
 	LyDo nvarchar(255),
 	constraint PK_CTKK primary key (MaPKK, MaSP)
 );
+
 
 -- =========================================================
 -- PHẦN 2: THÊM CÁC RÀNG BUỘC (CONSTRAINTS & FOREIGN KEYS)
@@ -302,11 +312,13 @@ GO
 -- PHẦN 4: THÊM DỮ LIỆU MẪU
 -- =========================================================
 
-insert into LoaiSanPham values
+
+insert into LoaiSanPham (MaLoai, TenLoai) values
 ('L01', N'Đồ uống'), ('L02', N'Bánh kẹo'), ('L03', N'Gia vị'), ('L04', N'Đồ hộp'),
 ('L05', N'Sữa'), ('L06', N'Mỹ phẩm'), ('L07', N'Văn phòng phẩm'), ('L08', N'Đồ gia dụng');
 
-insert into SanPham values
+
+insert into SanPham (MaSP, TenSP, DVT, SLTon, MaLoai, DonGia) values
 ('SP01', N'Nước suối Lavie', N'Chai', 100, 'L01', 5000),
 ('SP02', N'Coca Cola', N'Lon', 80, 'L01', 10000),
 ('SP03', N'Bánh Oreo', N'Gói', 60, 'L02', 15000),
@@ -326,7 +338,8 @@ insert into NhanVien values
 ('NV07', N'Bùi Văn G', '2000-01-05', '0923456789', N'Nhân Viên'),
 ('NV08', N'Võ Thị H', '2002-04-12', '0956789012', N'Nhân Viên');
 
-insert into NhaCungCap values
+
+insert into NhaCungCap (MaNCC, TenNCC, SDT, DiaChi, Email) values
 ('NCC01', N'Công ty An Phát', '0912345111', N'Hà Nội', 'anphat@gmail.com'),
 ('NCC02', N'Công ty Minh Long', '0912345222', N'TP.HCM', 'minhlong@gmail.com'),
 ('NCC03', N'Công ty Hòa Bình', '0912345333', N'Đà Nẵng', 'hoabinh@gmail.com'),
@@ -336,7 +349,8 @@ insert into NhaCungCap values
 ('NCC07', N'Công ty Tân Tiến', '0912345777', N'Đồng Nai', 'tantien@gmail.com'),
 ('NCC08', N'Công ty Phú Quý', '0912345888', N'Long An', 'phuquy@gmail.com');
 
-insert into DaiLy values
+
+insert into DaiLy (MaDL, TenDL, DiaChi, SDT) values
 ('DL01', N'Đại lý Minh Châu', N'Quận 1', '0934111111'),
 ('DL02', N'Đại lý Hồng Phát', N'Quận 3', '0934222222'),
 ('DL03', N'Đại lý Tân Lợi', N'Quận 5', '0934333333'),
@@ -399,7 +413,6 @@ insert into ChiTietKiemKe values
 ('PKK01', 'SP01', 110, 108, -2, N'Hư hỏng nhãn dán'),
 ('PKK01', 'SP02', 95, 95, 0, N'Bình thường'),
 ('PKK02', 'SP03', 67, 65, -2, N'Mất nắp chai');
-
 -- =========================================================
 -- PHẦN 5: VIEWS, PROCEDURES, FUNCTIONS, CURSORS
 -- =========================================================
@@ -800,6 +813,7 @@ GO
 -- =========================================================
 USE QL_KHO
 GO
+
 
 ----------------------------TẠO LOGIN---------------------------------
 
