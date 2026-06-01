@@ -973,3 +973,69 @@ BEGIN
     END CATCH
 END
 GO
+-- =========================================================
+-- PHẦN 9: XỬ LÝ DEADLOCK 
+-- =========================================================
+GO
+
+CREATE PROCEDURE sp_XulyDeadlock_CapNhatTonKho
+    @MaSP CHAR(10),
+    @SoLuongThayDoi INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+ 
+    DECLARE @RetryCount INT = 0;
+    DECLARE @MaxRetries INT = 3;
+    DECLARE @Success BIT = 0;
+
+    WHILE @RetryCount < @MaxRetries AND @Success = 0
+    BEGIN
+        BEGIN TRY
+            BEGIN TRAN;
+            
+            
+            SET DEADLOCK_PRIORITY NORMAL;
+
+           
+            UPDATE SanPham 
+            SET SLTon = SLTon + @SoLuongThayDoi 
+            WHERE MaSP = @MaSP;
+
+            COMMIT TRAN;
+            SET @Success = 1;
+            
+            PRINT N'Cập nhật tồn kho thành công cho Mã SP: ' + @MaSP;
+        END TRY
+        BEGIN CATCH
+       
+            IF @@TRANCOUNT > 0
+                ROLLBACK TRAN;
+
+          
+            IF ERROR_NUMBER() = 1205 
+            BEGIN
+                SET @RetryCount = @RetryCount + 1;
+                PRINT N'Phát hiện xung đột Deadlock! Đang thử lại lần ' + CAST(@RetryCount AS NVARCHAR(10)) + N'...';
+                
+              
+                WAITFOR DELAY '00:00:01'; 
+            END
+            ELSE
+            BEGIN
+             
+                DECLARE @ErrorMsg NVARCHAR(4000) = ERROR_MESSAGE();
+                RAISERROR(N'Đã xảy ra lỗi hệ thống: %s', 16, 1, @ErrorMsg);
+                BREAK;
+            END
+        END CATCH
+    END
+
+
+    IF @Success = 0
+    BEGIN
+        PRINT N'Giao dịch thất bại hoàn toàn sau ' + CAST(@MaxRetries AS NVARCHAR(10)) + N' lần thử do Deadlock.';
+    END
+END
+GO
