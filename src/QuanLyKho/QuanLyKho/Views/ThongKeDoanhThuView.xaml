@@ -27,7 +27,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Margin="0,0,15,0">
-                    <TextBlock Text="Tiêu chí gom nhóm (GroupBy)" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource TextMuted}" Margin="0,0,0,6"/>
+                    <TextBlock Text="Tiêu chí gom nhóm " FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource TextMuted}" Margin="0,0,0,6"/>
                     <ComboBox Padding="10" BorderBrush="{StaticResource BorderColor}" BorderThickness="1.5" 
                               ItemsSource="{Binding DanhSachTieuChi}" 
                               SelectedItem="{Binding TieuChiGomNhom}"/>

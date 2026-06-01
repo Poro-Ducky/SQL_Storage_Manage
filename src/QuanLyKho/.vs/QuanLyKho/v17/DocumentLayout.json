@@ -3,7 +3,31 @@
   "WorkspaceRootPath": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|e:\\doansql\\doan\\sql_storage_manage\\src\\quanlykho\\quanlykho\\views\\doimatkhauview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\quanlykho\\views\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|solutionrelative:quanlykho\\views\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|e:\\doansql\\doan\\sql_storage_manage\\src\\quanlykho\\quanlykho\\views\\dangnhapview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|solutionrelative:quanlykho\\views\\dangnhapview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\quanlykho\\views\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|solutionrelative:quanlykho\\views\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\quanlykho\\views\\thongkedoanhthuview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|solutionrelative:quanlykho\\views\\thongkedoanhthuview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\quanlykho\\views\\timkiemchungtuview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|solutionrelative:quanlykho\\views\\timkiemchungtuview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\quanlykho\\views\\themsanphamview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|solutionrelative:quanlykho\\views\\themsanphamview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\quanlykho\\views\\doimatkhauview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|solutionrelative:quanlykho\\views\\doimatkhauview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
@@ -87,10 +111,6 @@
       "RelativeMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|solutionrelative:quanlykho\\viewmodels\\themsanphamviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\quanlykho\\views\\dangnhapview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|solutionrelative:quanlykho\\views\\dangnhapview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\quanlykho\\viewmodels\\taohoadonbanviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|solutionrelative:quanlykho\\viewmodels\\taohoadonbanviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -109,18 +129,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\quanlykho\\views\\inbaocaoview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|solutionrelative:quanlykho\\views\\inbaocaoview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\quanlykho\\views\\thongkedoanhthuview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|solutionrelative:quanlykho\\views\\thongkedoanhthuview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\quanlykho\\views\\themsanphamview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|solutionrelative:quanlykho\\views\\themsanphamview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\quanlykho\\views\\timkiemchungtuview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|solutionrelative:quanlykho\\views\\timkiemchungtuview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\quanlykho\\viewmodels\\taohoadonnhapviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -161,10 +169,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\obj\\Debug\\Views\\NhaCungCapView.g.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:QuanLyKho\\obj\\Debug\\Views\\NhaCungCapView.g.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\quanlykho\\views\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|solutionrelative:quanlykho\\views\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CE013099-2020-4570-ABA1-3157DE15288A}|QuanLyKho\\QuanLyKho.csproj|E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\quanlykho\\models\\qlkhomodel.context.tt||{8B382828-6202-11D1-8870-0000F87579D2}",
@@ -210,11 +214,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 270,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "QuanLyKho\\Views\\MainWindow.xaml.cs",
+              "ToolTip": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\MainWindow.xaml.cs",
+              "RelativeToolTip": "QuanLyKho\\Views\\MainWindow.xaml.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAowCIAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-01T10:53:59.166Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "ThemDanhMucView.xaml",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\ThemDanhMucView.xaml",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\ThemDanhMucView.xaml",
@@ -225,19 +242,18 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "DoiMatKhauView.xaml",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\DoiMatKhauView.xaml",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\DoiMatKhauView.xaml",
               "ToolTip": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\DoiMatKhauView.xaml",
               "RelativeToolTip": "QuanLyKho\\Views\\DoiMatKhauView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-31T15:40:43.442Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-31T15:40:43.442Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 18,
               "Title": "QuanLyTaiKhoanView.xaml",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\QuanLyTaiKhoanView.xaml",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\QuanLyTaiKhoanView.xaml",
@@ -248,18 +264,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 1,
               "Title": "DangNhapView.xaml",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\DangNhapView.xaml",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\DangNhapView.xaml",
               "ToolTip": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\DangNhapView.xaml",
               "RelativeToolTip": "QuanLyKho\\Views\\DangNhapView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-31T15:23:28.218Z"
+              "WhenOpened": "2026-05-31T15:23:28.218Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 29,
               "Title": "TrangChuView.xaml.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\TrangChuView.xaml.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\TrangChuView.xaml.cs",
@@ -271,7 +288,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 30,
               "Title": "TrangChuView.g.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\obj\\Debug\\Views\\TrangChuView.g.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\obj\\Debug\\Views\\TrangChuView.g.cs",
@@ -283,7 +300,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 31,
               "Title": "InBaoCaoView.xaml",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\InBaoCaoView.xaml",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\InBaoCaoView.xaml",
@@ -294,7 +311,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 28,
               "Title": "BaoCaoPhanTichView.xaml",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\BaoCaoPhanTichView.xaml",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\BaoCaoPhanTichView.xaml",
@@ -305,7 +322,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
               "Title": "TrangChuView.xaml",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\TrangChuView.xaml",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\TrangChuView.xaml",
@@ -316,7 +333,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 34,
               "Title": "PhieuKiemKeView.xaml",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\PhieuKiemKeView.xaml",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\PhieuKiemKeView.xaml",
@@ -327,7 +344,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 36,
               "Title": "TaoHoaDonNhapView.xaml",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\TaoHoaDonNhapView.xaml",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\TaoHoaDonNhapView.xaml",
@@ -338,7 +355,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 35,
               "Title": "TaoHoaDonBanView.xaml",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\TaoHoaDonBanView.xaml",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\TaoHoaDonBanView.xaml",
@@ -349,7 +366,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 41,
               "Title": "NhaCungCapView.g.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\obj\\Debug\\Views\\NhaCungCapView.g.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\obj\\Debug\\Views\\NhaCungCapView.g.cs",
@@ -361,7 +378,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 40,
               "Title": "NhaCungCapView.xaml.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\NhaCungCapView.xaml.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\NhaCungCapView.xaml.cs",
@@ -373,7 +390,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 38,
               "Title": "DaiLyView.xaml",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\DaiLyView.xaml",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\DaiLyView.xaml",
@@ -384,7 +401,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 39,
               "Title": "NhaCungCapView.xaml",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\NhaCungCapView.xaml",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\NhaCungCapView.xaml",
@@ -395,7 +412,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 2,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\MainWindow.xaml",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\MainWindow.xaml",
@@ -406,7 +423,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 46,
               "Title": "ChiTietKiemKe.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Models\\ChiTietKiemKe.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\Models\\ChiTietKiemKe.cs",
@@ -418,7 +435,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 47,
               "Title": "ChiTietPN.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Models\\ChiTietPN.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\Models\\ChiTietPN.cs",
@@ -430,7 +447,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 48,
               "Title": "ChiTietPX.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Models\\ChiTietPX.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\Models\\ChiTietPX.cs",
@@ -442,7 +459,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 49,
               "Title": "DaiLy.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Models\\DaiLy.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\Models\\DaiLy.cs",
@@ -454,7 +471,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 44,
               "Title": "QLKhoModel.edmx.diagram",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Models\\QLKhoModel.edmx.diagram",
               "RelativeDocumentMoniker": "QuanLyKho\\Models\\QLKhoModel.edmx.diagram",
@@ -466,7 +483,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 45,
               "Title": "QLKhoModel.tt",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Models\\QLKhoModel.tt",
               "RelativeDocumentMoniker": "QuanLyKho\\Models\\QLKhoModel.tt",
@@ -478,7 +495,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 43,
               "Title": "QLKhoModel.Designer.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Models\\QLKhoModel.Designer.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\Models\\QLKhoModel.Designer.cs",
@@ -490,7 +507,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 42,
               "Title": "QLKhoModel.Context.tt",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Models\\QLKhoModel.Context.tt",
               "RelativeDocumentMoniker": "QuanLyKho\\Models\\QLKhoModel.Context.tt",
@@ -502,7 +519,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 13,
               "Title": "TrangChuViewModel.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\TrangChuViewModel.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\TrangChuViewModel.cs",
@@ -514,7 +531,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 23,
               "Title": "TraCuuTonKhoViewModel.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\TraCuuTonKhoViewModel.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\TraCuuTonKhoViewModel.cs",
@@ -526,7 +543,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 25,
               "Title": "TimKiemChungTuViewModel.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\TimKiemChungTuViewModel.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\TimKiemChungTuViewModel.cs",
@@ -538,7 +555,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 24,
               "Title": "ThongKeDoanhThuViewModel.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\ThongKeDoanhThuViewModel.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\ThongKeDoanhThuViewModel.cs",
@@ -550,7 +567,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 26,
               "Title": "ThemSanPhamViewModel.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\ThemSanPhamViewModel.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\ThemSanPhamViewModel.cs",
@@ -562,7 +579,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 22,
               "Title": "ThemDanhMucViewModel.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\ThemDanhMucViewModel.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\ThemDanhMucViewModel.cs",
@@ -574,7 +591,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 32,
               "Title": "TaoHoaDonNhapViewModel.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\TaoHoaDonNhapViewModel.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\TaoHoaDonNhapViewModel.cs",
@@ -586,7 +603,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 27,
               "Title": "TaoHoaDonBanViewModel.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\TaoHoaDonBanViewModel.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\TaoHoaDonBanViewModel.cs",
@@ -598,7 +615,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 17,
               "Title": "RelayCommand.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\RelayCommand.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\RelayCommand.cs",
@@ -610,7 +627,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 33,
               "Title": "PhieuKiemKeViewModel.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\PhieuKiemKeViewModel.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\PhieuKiemKeViewModel.cs",
@@ -622,7 +639,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 20,
               "Title": "NhaCungCapViewModel.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\NhaCungCapViewModel.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\NhaCungCapViewModel.cs",
@@ -634,7 +651,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 21,
               "Title": "MainViewModel.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\MainViewModel.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\MainViewModel.cs",
@@ -646,7 +663,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 14,
               "Title": "InBaoCaoViewModel.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\InBaoCaoViewModel.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\InBaoCaoViewModel.cs",
@@ -658,7 +675,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "DoiMatKhauViewModel.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\DoiMatKhauViewModel.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\DoiMatKhauViewModel.cs",
@@ -670,7 +687,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 15,
               "Title": "DangNhapViewModel.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\DangNhapViewModel.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\DangNhapViewModel.cs",
@@ -682,7 +699,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 12,
               "Title": "DaiLyViewModel.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\DaiLyViewModel.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\DaiLyViewModel.cs",
@@ -694,7 +711,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 16,
               "Title": "BaseViewMode.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\BaseViewMode.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\BaseViewMode.cs",
@@ -706,7 +723,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 8,
               "Title": "BaoCaoPhanTichViewModel.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\BaoCaoPhanTichViewModel.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\BaoCaoPhanTichViewModel.cs",
@@ -718,7 +735,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 37,
               "Title": "QLKhoModel.edmx [Diagram1]",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Models\\QLKhoModel.edmx",
               "RelativeDocumentMoniker": "QuanLyKho\\Models\\QLKhoModel.edmx",
@@ -729,7 +746,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "TraCuuTonKhoView.xaml",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\TraCuuTonKhoView.xaml",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\TraCuuTonKhoView.xaml",
@@ -740,7 +757,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 4,
               "Title": "TimKiemChungTuView.xaml",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\TimKiemChungTuView.xaml",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\TimKiemChungTuView.xaml",
@@ -751,7 +768,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 3,
               "Title": "ThongKeDoanhThuView.xaml",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\ThongKeDoanhThuView.xaml",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\ThongKeDoanhThuView.xaml",
@@ -762,7 +779,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 5,
               "Title": "ThemSanPhamView.xaml",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\Views\\ThemSanPhamView.xaml",
               "RelativeDocumentMoniker": "QuanLyKho\\Views\\ThemSanPhamView.xaml",
@@ -773,7 +790,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 19,
               "Title": "QuanLyTaiKhoanViewModel.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\ViewModels\\QuanLyTaiKhoanViewModel.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\ViewModels\\QuanLyTaiKhoanViewModel.cs",
@@ -785,7 +802,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 50,
               "Title": "MainWindow.g.cs",
               "DocumentMoniker": "E:\\DoAnSQL\\DoAn\\SQL_Storage_Manage\\src\\QuanLyKho\\QuanLyKho\\obj\\Debug\\Views\\MainWindow.g.cs",
               "RelativeDocumentMoniker": "QuanLyKho\\obj\\Debug\\Views\\MainWindow.g.cs",

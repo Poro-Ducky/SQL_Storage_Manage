@@ -1,8 +1,8 @@
 ﻿---Thành viên nhóm:
----Trần Huỳnh Hoàng Long
----Nguyễn Hoàng Hiển Long
 ---Nguyễn Hữu Nhật
----Võ Thành Long
+---Nguyễn Gia Thịnh
+---Phạm Lê Đăng Vương
+---Phạm Duy Đạt
 
 
 CREATE DATABASE QL_KHO

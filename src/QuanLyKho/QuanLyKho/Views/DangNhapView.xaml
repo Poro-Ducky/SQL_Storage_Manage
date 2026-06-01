@@ -6,47 +6,87 @@
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1366" Background="Transparent">
 
-    <Grid>
-        <Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#F3F6FD" Offset="0"/>
-                <GradientStop Color="#D8E0F0" Offset="1"/>
-            </LinearGradientBrush>
-        </Grid.Background>
+    <Grid Background="#F4F6F9">
 
-        <Border Width="420" Background="{StaticResource BgSurface}" CornerRadius="20" Padding="40,50" 
+      
+        <Border Width="1000" Height="620" Background="White" CornerRadius="30" 
                 HorizontalAlignment="Center" VerticalAlignment="Center">
+         
             <Border.Effect>
-                <DropShadowEffect BlurRadius="20" ShadowDepth="5" Opacity="0.05" Color="#131242"/>
+                <DropShadowEffect BlurRadius="50" ShadowDepth="15" Opacity="0.08" Color="#000000"/>
             </Border.Effect>
 
-            <StackPanel>
-                <TextBlock Text="Hệ Thống Quản Lý" FontSize="24" FontWeight="Bold" Foreground="{StaticResource TextDark}" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-                <TextBlock Text="Vui lòng đăng nhập để tiếp tục" FontSize="14" Foreground="{StaticResource TextMuted}" HorizontalAlignment="Center" Margin="0,0,0,30"/>
+            <Grid>
+             
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4.5*"/>
+                    <ColumnDefinition Width="5.5*"/>
+                </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Tên đăng nhập" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource TextDark}" Margin="0,0,0,8"/>
-                <Border Background="{StaticResource BgSurface}" CornerRadius="10" BorderBrush="{StaticResource BorderColor}" BorderThickness="1.5" Padding="12" Margin="0,0,0,20">
-                    <TextBox Background="Transparent" 
-                             BorderThickness="0" 
-                             FontSize="14" 
-                             Text="{Binding TenDangNhap, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+             
+                <Border Grid.Column="0" CornerRadius="30,0,0,30">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                           
+                            <GradientStop Color="#938BFF" Offset="0"/>
+                            <GradientStop Color="#6156FF" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+
+                    <StackPanel Margin="45,50,45,45">
+
+                      
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,40">
+                            <TextBlock Text="STORAGE" FontSize="32" FontWeight="Black" Foreground="White" VerticalAlignment="Center"/>
+                            <TextBlock Text="PRO" FontSize="32" FontWeight="Black" Foreground="#C7D2FE" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                  
+                        <TextBlock Text="Quản Lý Kho Chuyên Nghiệp &#x1F310;" 
+                                   FontSize="40" FontWeight="Bold" Foreground="White" TextWrapping="Wrap" LineHeight="55" Margin="0,0,0,20"/>
+
+                      
+                        <TextBlock Text="Giải pháp tối ưu hóa quy trình nhập xuất, theo dõi hàng hóa và nhân sự với độ chính xác cao." 
+                                   FontSize="15" Foreground="#E0E7FF" TextWrapping="Wrap" LineHeight="24" Opacity="0.9"/>
+                    </StackPanel>
                 </Border>
 
-                <TextBlock Text="Mật khẩu" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource TextDark}" Margin="0,0,0,8"/>
-                <Border Background="{StaticResource BgSurface}" CornerRadius="10" BorderBrush="{StaticResource BorderColor}" BorderThickness="1.5" Padding="12" Margin="0,0,0,30">
-                    <PasswordBox x:Name="txtPassword" Background="Transparent" BorderThickness="0" FontSize="14"/>
-                </Border>
+               
+                <Grid Grid.Column="1" Margin="80,0,80,0">
+                    <StackPanel VerticalAlignment="Center">
 
-                <Button Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=txtPassword}" Background="{StaticResource PrimaryColor}" Foreground="White" FontWeight="Bold" FontSize="15" Padding="15" BorderThickness="0" Cursor="Hand">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="10"/>
-                        </Style>
-                    </Button.Resources>
-                    <TextBlock Text="ĐĂNG NHẬP"/>
-                </Button>
+                        <TextBlock Text="Đăng Nhập Hệ Thống" FontSize="26" FontWeight="Bold" Foreground="#111827" Margin="0,0,0,50"/>
 
-            </StackPanel>
+                  
+                        <TextBlock Text="Tên đăng nhập" FontSize="13" FontWeight="SemiBold" Foreground="#9CA3AF" Margin="0,0,0,5"/>
+                        <Border BorderBrush="#E5E7EB" BorderThickness="0,0,0,1.5" Padding="0,0,0,8" Margin="0,0,0,35">
+                            <TextBox Background="Transparent" BorderThickness="0" FontSize="16" Foreground="#1F2937" FontWeight="Medium"
+                                     Text="{Binding TenDangNhap, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+                        </Border>
+
+                       
+                        <TextBlock Text="Mật khẩu" FontSize="13" FontWeight="SemiBold" Foreground="#9CA3AF" Margin="0,0,0,5"/>
+                        <Border BorderBrush="#E5E7EB" BorderThickness="0,0,0,1.5" Padding="0,0,0,8" Margin="0,0,0,50">
+                            <PasswordBox x:Name="txtPassword" Background="Transparent" BorderThickness="0" FontSize="16" Foreground="#1F2937" FontWeight="Medium"/>
+                        </Border>
+
+                    
+                        <Button Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=txtPassword}" 
+                                Foreground="White" FontWeight="Bold" FontSize="16" Cursor="Hand" Height="55">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                  
+                                    <Border Background="#5A51F2" CornerRadius="27">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <TextBlock Text="ĐĂNG NHẬP"/>
+                        </Button>
+
+                    </StackPanel>
+                </Grid>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>
